@@ -11,10 +11,10 @@ function generatePassword() {
     return
   } ;
 
-  var userlower = window.confirm("Do you want your password to include lowercase characters");
-  var userupper = window.confirm("Do you want your password to include uppercase characters");
+  var userlower = window.confirm("Do you want your password to include lowercase characters?");
+  var userupper = window.confirm("Do you want your password to include uppercase characters?");
   var usernumbers = window.confirm("Do you want your password to include numbers?");
-  var userspecial = window.confirm("Do you want your password to include special characters");
+  var userspecial = window.confirm("Do you want your password to include special characters?");
 
   var lower = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
   var upper = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
@@ -24,40 +24,49 @@ function generatePassword() {
   var userpref = [];
 
   if (userlower === true) {
-   var userpref = userpref.concat(lower)
+   userpref.push(lower)
   }
 
   if (userupper === true) {
-    var userpref = userpref.concat(upper)
+    userpref.push(upper)
   }
   if (usernumbers === true) {
-    var userpref = userpref.concat(numbers)
+    userpref.push(numbers)
   }
   if (userspecial === true) {
-    var userpref = userpref.concat(special)
+    userpref.push(special)
   }
-  console.log(userpref);
+  if(userpref.length === 0) {
+    window.alert("Please refresh and select at least one charater type")
+  }
 
   //Select a random integer and select the charater in that position length number of times
+  var generatePassword = ""
 
-
-
+  for (i = 0; i < passwordlength; i++) {
+    var randomCharacter = getRndItem(userpref)
+    var newuserpref = getRndItem(randomCharacter)
+    generatePassword += newuserpref
+    console.log(generatePassword)
+  }
   
-
- 
-
- 
-
- 
-  
+  return generatePassword
 
  
 }
 
-function randomnumber () {
-  
+function getRndInteger(min, max) {
+  if (!max) {
+    max  =min
+    min = 0
+  }
+  var rand = Math.random()
+  return Math.floor(min*(1-rand) + rand*max) ;
 }
 
+function getRndItem(list) {
+  return list[getRndInteger(list.length)]
+}
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
